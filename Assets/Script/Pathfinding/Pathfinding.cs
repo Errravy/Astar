@@ -101,7 +101,6 @@ public class Pathfinding
         foreach (Node n in nodes.Values)
         {
             int neighbourDistance = Mathf.RoundToInt(Vector2.Distance(current.transform.position, n.transform.position) * 10);
-            Debug.Log(nodes + " : " + neighbourDistance);
             if (neigbor.Count >= 4)
             {
                 break;

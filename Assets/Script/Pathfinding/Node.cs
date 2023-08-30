@@ -25,6 +25,7 @@ public class Node : MonoBehaviour
     public Vector2Int tileKey; // Nodes key in NodeGenerator Dictionary 
     private SpriteRenderer sr;
     private Pathfinding pathfinding;
+    private bool canBlock;
 
     [SerializeField] Sprite empty;
     [SerializeField] Sprite walkNode;
@@ -35,6 +36,11 @@ public class Node : MonoBehaviour
     public void SetNodeName(string name)
     {
         this.gameObject.name = name;
+    }
+
+    private void OnMouseEnter()
+    {
+        canBlock = true;
     }
 
     private void OnMouseDown()
@@ -53,6 +59,11 @@ public class Node : MonoBehaviour
         }
     }
 
+    private void OnMouseExit()
+    {
+        canBlock = false;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -61,6 +72,12 @@ public class Node : MonoBehaviour
             {
                 node.Empty();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (canBlock)
+                Block();
         }
     }
 
@@ -74,8 +91,16 @@ public class Node : MonoBehaviour
 
     public void Block()
     {
-        sr.sprite = blockNode;
-        Blocked = true;
+        if (!Blocked)
+        {
+            sr.sprite = blockNode;
+            Blocked = true;
+        }
+        else
+        {
+            sr.sprite = empty;
+            Blocked = false;
+        }
     }
 
     public void Empty()
